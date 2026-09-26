@@ -7,6 +7,7 @@ import { useData } from "../context/DataContext.js";
 import { SourceCard } from "./SourceCard.jsx";
 import { NormaBadge } from "./badges.jsx";
 import { isStepDone, toggleStep, trailProgress } from "../utils/progress.js";
+import { PROJETOS_FINAIS, NIVEIS } from "../data/trailProjects.js";
 
 // SP-49 (15/07, achado no SP-45 item 2 do ESTUDO_VIABILIDADE): escola_sources.tipo — cobertura
 // 120/253 (47%), melhor que material_types (item 10 do Tier 2, 6,5%). Valores reais no dado:
@@ -18,10 +19,15 @@ const INSTITUICAO_TIPO_META = {
   privada: { label: "Privada", color: C.muted, bg: C.border },
 };
 
+const sectionLabel = { fontSize:9, color:C.faint, textTransform:"uppercase", letterSpacing:1, marginBottom:4, marginTop:8 };
+const sectionText = { margin:"0 0 8px", fontSize:11, color:C.dim, lineHeight:1.6 };
+
 export function TrailCard({trail,favorites,toggleFav}){
   const {sourceMap} = useData();
   const [open,setOpen]=useState(false);
   const [stepSel,setStepSel]=useState(null);
+  const [showProjeto,setShowProjeto]=useState(false);
+  const projeto = PROJETOS_FINAIS[trail.id];
   const [progress,setProgress]=useState(()=>trailProgress(trail.id,trail.steps.length));
   const handleToggleStep=(i)=>{
     toggleStep(trail.id,i);
@@ -109,6 +115,48 @@ export function TrailCard({trail,favorites,toggleFav}){
           style={{...btn(open?trail.color+"33":C.surface,trail.color,trail.color+"44"),width:"100%"}}>
           {open?"▲ Fechar trilha":"▼ Ver etapas da trilha"}
         </button>
+
+        {/* Projeto Final (Relatório Técnico Final IndústriaEDU, seção 8) — só existe pras
+            trilhas mapeadas em data/trailProjects.js até agora (9 de 107). */}
+        {projeto&&(
+          <>
+            <button onClick={()=>setShowProjeto(s=>!s)}
+              style={{...btn(showProjeto?C.greenBright+"33":C.surface,C.greenBright,C.greenBright+"44"),width:"100%",marginTop:8}}>
+              {showProjeto?"▲ Fechar Projeto Final":"🎯 Ver Projeto Final"}
+            </button>
+            {showProjeto&&(
+              <div style={{marginTop:10,padding:14,borderRadius:8,background:C.surface,border:`1px solid ${C.greenBright}33`}}>
+                <div style={sectionLabel}>Situação-problema</div>
+                <p style={sectionText}>{projeto.situacao}</p>
+                <div style={sectionLabel}>Objetivo</div>
+                <p style={sectionText}>{projeto.objetivo}</p>
+                <div style={sectionLabel}>Roteiro sugerido</div>
+                <ol style={{margin:"0 0 10px",paddingLeft:18}}>
+                  {projeto.roteiro.map((passo,i)=>(
+                    <li key={i} style={{...sectionText,marginBottom:4}}>{passo}</li>
+                  ))}
+                </ol>
+                <div style={sectionLabel}>Formato de entrega</div>
+                <p style={sectionText}>{projeto.formatoEntrega}</p>
+                <div style={sectionLabel}>Como se autoavaliar</div>
+                <ul style={{margin:"0 0 10px",paddingLeft:18}}>
+                  {projeto.criterios.map((c,i)=>(
+                    <li key={i} style={{...sectionText,marginBottom:4}}>{c}</li>
+                  ))}
+                </ul>
+                <div style={sectionLabel}>Níveis de complexidade</div>
+                <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                  {NIVEIS.map(n=>(
+                    <div key={n.nivel} style={{flex:"1 1 140px",padding:8,borderRadius:6,background:C.border+"55",fontSize:10}}>
+                      <div style={{fontWeight:700,color:C.text,marginBottom:2}}>{n.nivel}. {n.nome} — {n.tempo}</div>
+                      <div style={{color:C.muted}}>{n.entrega}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
       {open&&(
         <div style={{borderTop:`1px solid ${trail.color}33`,padding:"14px 18px",background:C.surface3}}>
