@@ -27,12 +27,18 @@ export async function loadCore() {
     getJSON("/api/panorama-uf"), // SP-57
   ]);
 
+  // TRL-TI-007 é um stub gerado por patch pra satisfazer FK em trail_escola_links (ver
+  // ACHADOS_QUALIDADE_DADO_SESSAO_SITE_26-09.md na branch docs-internos) — filtro aqui
+  // no cliente pra não depender de redeploy do Worker; worker/src/loadTrails.js já
+  // recebeu o mesmo filtro do lado do servidor pra quando o Worker for republicado.
+  const trailsSemStub = trails.filter((t) => t.id !== "TRL-TI-007");
+
   return {
     social: socialBundle.social,
     tagColors: socialBundle.tagColors,
     formatMeta: socialBundle.formatMeta,
     technical: technicalBundle.technical,
-    trails, profiles, guideBlocks, atlasTrails, eliteProfiles, normasCatalogo,
+    trails: trailsSemStub, profiles, guideBlocks, atlasTrails, eliteProfiles, normasCatalogo,
     complementarity, sectorFato, companies, mercadoTrabalho, sinaisMercado, panoramaUF,
   };
 }
