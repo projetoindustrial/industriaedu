@@ -1,53 +1,55 @@
 # Achados de qualidade de dado — sessão SITE, 26/09/2026
 
 Registrados durante o trabalho de classificação por categoria e criação do "Projeto
-Final" nas 107 trilhas (ver commits `cab0ac2`, `05b7df9`...`e62ccc1` no histórico de
-`main`). Assinalado pra sessão BANCO decidir o que corrigir na fonte.
+Final" nas 107 trilhas. Atualizado no mesmo dia após uma segunda passada corrigindo
+o que dava pra corrigir com segurança em `worker/d1/data.sql` (commit `1bdb5a5`).
 
-## 1. Trilha-stub sem conteúdo real: `TRL-TI-007`
-Campo `description` dessa trilha no banco (`worker/d1/data.sql`) contém literalmente:
+**Importante para quem for aplicar isso:** correções em `data.sql` só valem no site
+depois que o D1 ao vivo for reimportado a partir desse arquivo — eu não tenho acesso
+à API da Cloudflare pra fazer isso diretamente.
 
-> "Stub gerado pelo patch consolidado para garantir FK em trail_escola_links"
+## 1. Trilha-stub sem conteúdo real: `TRL-TI-007` — ✅ ocultada (não removida)
+Descrição no banco: "Stub gerado pelo patch consolidado para garantir FK em
+trail_escola_links". Não é uma trilha real. **Decisão tomada:** não apaguei a linha
+do banco (poderia quebrar a FK que ela foi criada pra satisfazer). Em vez disso,
+filtrei ela da saída em dois lugares: `worker/src/loadTrails.js` (servidor, só vale
+após redeploy do Worker) e `portal/data/loadCore.js` (cliente, **já em produção** —
+o visitante não vê mais essa trilha, independente do estado do Worker).
+Se o time de BANCO quiser resolver na raiz (ex: flag `is_stub`/`hidden` na tabela),
+os dois filtros client-side e server-side podem ser removidos depois.
 
-Ou seja, é um registro técnico criado só pra satisfazer uma constraint de chave
-estrangeira, não uma trilha de carreira real. Ela não recebeu Projeto Final de
-propósito. **Sugestão:** decidir se ela deve ser removida da tabela `trails` ou
-marcada com uma flag (`is_stub`/`hidden`) pra não aparecer no catálogo público do
-portal — hoje ela aparece normalmente pro visitante, com nome genérico "Trilha
-Tecnologia da Informação 007".
+## 2. CNCT com quebra de linha: `TRL-SUB-003` — ✅ corrigido em `data.sql`
+Era `"...Segurança Industria\nl"` (quebrado no meio da palavra). Corrigido pra
+`"...Segurança Industrial"` direto na fonte. Meu mapa de categorização
+(`portal/data/trailCategories.js`) já tinha um caso especial pra esse valor quebrado
+— pode ser simplificado depois que o D1 for reimportado com o valor corrigido (o
+caso especial não atrapalha, só fica redundante).
 
-## 2. CNCT com quebra de linha no meio da palavra: `TRL-SUB-003`
-Campo `cnct_label` está gravado como:
+## 3. Inconsistência NR-38 × NR-37: `TRL-SUB-008` — ⚠️ NÃO mexido, ficou mais confuso
+Achei uma **terceira fonte** que não tinha visto na primeira passada: além do título
+("NR-38") e da descrição da trilha ("NR-37"), existe uma **outra tabela** (algo tipo
+atlas/referência técnica, entrada de id 185) que também cita essa sub-trilha e diz:
 
-`"Automação e Controle de Processos / Segurança Industria\nl"`
+> "NR-38 (Segurança e Saúde no Trabalho em Atividades da Indústria de Petróleo e Gás)"
 
-— ou seja, "Industrial" quebrado em "Industria" + `\n` + "l". Parece um artefato de
-importação/concatenação. Meu mapa de categorização (`portal/data/trailCategories.js`)
-já trata essa string exata como caso especial pra classificar corretamente, mas o
-ideal é corrigir a origem no banco.
+Ou seja, 2 fontes dizem NR-38 (o título da trilha + essa tabela atlas) e só 1 diz
+NR-37 (a descrição da trilha). Eu tinha corrigido o título pra NR-37 antes de achar
+essa terceira fonte — **desfiz essa mudança**, porque a maioria das fontes internas
+aponta NR-38, e não tenho como verificar contra a norma real qual é a intenção
+correta sem pesquisa regulatória. **Fica pra quem tiver mais contexto decidir** —
+as 3 fontes (nome da trilha, description da trilha, e a entrada na tabela atlas
+id=185) deveriam ser alinhadas depois de confirmado qual NR é a certa pro contexto
+(parece ser sobre plataformas/indústria de petróleo e gás, dado o agrupamento com
+outras sub-trilhas offshore).
 
-## 3. Possível inconsistência título × descrição: `TRL-SUB-008`
-- **Título:** "Sub-trilha: NRs Específicas — NR-38 e NR-12"
-- **Descrição:** menciona "NR-37 (Segurança e Saúde em Plataformas de Petróleo) e NR-12"
-
-NR-38 (trabalho doméstico) e NR-37 (plataformas de petróleo) são normas completamente
-diferentes. Pelo contexto da trilha (parece ligada a offshore/plataformas, dado o
-prefixo `SUB` usado em outras sub-trilhas de petróleo/automação avançada), a
-descrição (NR-37) parece a correta e o título provavelmente tem um erro de digitação.
-**Sugestão:** conferir com a fonte original e corrigir o título se for o caso.
-
-## 4. Campo `description` vazio em 4 trilhas
-- `TRL-CNCT-040` (Laticínios)
-- `TRL-CNCT-041` (Carnes e Derivados)
-- `TRL-MOD-004` (Perfuração HPHT e Águas Ultraprofundas)
-- `TRL-MOD-006` (Soldagem de Materiais Não Ferrosos)
-
-Essas 4 têm `name` e `cnct_label` preenchidos normalmente, só o `description` está
-vazio (`''`). O Projeto Final delas foi escrito só a partir do nome/CNCT, sem a
-descrição de apoio que as outras 102 trilhas tiveram. Não é um problema urgente, mas
-vale completar o campo pra manter a consistência dos dados.
+## 4. Campo `description` vazio em 4 trilhas — ✅ preenchido em `data.sql`
+`TRL-CNCT-040` (Laticínios), `TRL-CNCT-041` (Carnes e Derivados), `TRL-MOD-004`
+(Perfuração HPHT), `TRL-MOD-006` (Soldagem Não Ferrosos) tinham `description` vazia.
+Escrevi uma descrição de 1-2 frases pra cada uma, no mesmo estilo das demais 102
+trilhas, baseada no nome/CNCT de cada uma. Vale uma revisão humana já que não vieram
+de nenhuma fonte curada, só do meu conhecimento geral da área.
 
 ---
-*Nenhum desses pontos bloqueou a entrega — todos os 106 Projetos Final funcionais
-foram publicados normalmente. São apenas melhorias de qualidade de dado pra próxima
-sessão BANCO.*
+*Validação: carreguei `schema.sql` + `data.sql` corrigido num SQLite real antes de
+subir — schema aceitou sem erro, 107 trilhas intactas, campos preenchidos conferidos
+um a um.*
