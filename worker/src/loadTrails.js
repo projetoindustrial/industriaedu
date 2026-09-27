@@ -7,7 +7,7 @@ import { query, groupBy } from "./helpers.js";
 
 export async function loadTrails(db) {
   const [
-    trailRows,
+    trailRowsRaw,
     stepRows,
     stepSourceRows,
     escolaLinkRows,
@@ -30,6 +30,13 @@ export async function loadTrails(db) {
 
   const idsByStep = groupBy(stepSourceRows, "step_id");
   const stepsByTrail = groupBy(stepRows, "trail_id");
+
+  // TRL-TI-007 é um stub gerado por patch pra satisfazer FK em trail_escola_links (ver
+  // ACHADOS_QUALIDADE_DADO_SESSAO_SITE_26-09.md na branch docs-internos) — nunca deve
+  // aparecer pro visitante. Não removemos a linha do banco (poderia quebrar a FK que
+  // ela foi criada pra satisfazer), só filtramos aqui na saída da API.
+  const trailRows = trailRowsRaw.filter((t) => t.id !== "TRL-TI-007");
+
 
   const escolaById = {};
   escolaRows.forEach((e) => { escolaById[e.id] = e; });
