@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metodologia — IndústriaEDU</title>
+<meta name="robots" content="noindex">
+<style>
+  body{max-width:720px;margin:0 auto;padding:32px 20px 80px;font-family:system-ui,sans-serif;
+       line-height:1.65;color:#1c2226;background:#fff;}
+  .draft{background:#FEF3E2;border:1px solid #E2924D;color:#7A4A12;padding:10px 14px;
+          border-radius:4px;font-size:13px;margin-bottom:28px;}
+  h1{font-size:24px;} h2{font-size:17px;margin-top:32px;}
+  a{color:#0B5FA5;}
+  .back{display:inline-block;margin-bottom:20px;font-size:13px;color:#5B666C;text-decoration:none;}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">&larr; voltar ao IndústriaEDU</a>
+<div class="draft">⚠️ Rascunho gerado automaticamente, aguardando revisão humana antes de ser
+considerado definitivo — especialmente a licença do código.</div>
+<h1>Metodologia — IndústriaEDU</h1>
+<p><em>Última atualização: 27 de setembro de 2026</em></p>
+<h2>Como uma fonte entra no catálogo</h2>
+<p>Cada curso, trilha ou programa listado passa por um processo de curadoria antes de entrar no
+banco:</p>
+<ol>
+<li><strong>Identificação da fonte</strong> — a partir de busca direta no site da instituição/empresa/órgão
+   público, nunca de agregador de terceiro sem confirmar a fonte primária.</li>
+<li><strong>Confirmação de gratuidade</strong> — verificamos se o curso é de fato gratuito (não apenas com
+   "aula grátis" seguida de cobrança), e registramos o motivo quando a gratuidade é parcial ou
+   condicional (<code>gratuito_raw</code>, <code>cost_note</code>).</li>
+<li><strong>Registro de metadado</strong> — instituição, formato (EAD/presencial/híbrido), abrangência
+   (nacional/estadual), idioma, e o link direto pra página do curso (nunca a home genérica do
+   site).</li>
+<li><strong>Classificação</strong> — cada fonte é ligada a uma trilha de carreira (baseada na Classificação
+   Nacional de Cursos Técnicos — CNCT) e, quando aplicável, a um CBO (Classificação Brasileira
+   de Ocupações).</li>
+</ol>
+<h2>Como cuidamos da qualidade ao longo do tempo</h2>
+<ul>
+<li><strong>Checagem de link</strong>: todo registro tem um campo de status de link (<code>url_status</code>) e a data
+  da última checagem (<code>url_checado_em</code>). Um checador automatizado roda periodicamente (ver
+  workflow de <em>health check</em> no repositório) e sinaliza links quebrados para revisão manual —
+  nenhum registro é removido automaticamente, só sinalizado.</li>
+<li><strong>Trilhas sem conteúdo</strong>: uma trilha só é exibida publicamente quando tem pelo menos uma
+  etapa (<code>trail_step</code>) com curso associado. Trilhas planejadas mas ainda vazias ficam ocultas
+  até serem preenchidas.</li>
+<li><strong>Origem rastreável</strong>: cada fonte guarda de onde veio a informação (<code>source_doc</code>, <code>batch</code>),
+  para permitir auditoria e correção posterior sem perder o histórico.</li>
+</ul>
+<h2>Limitações conhecidas</h2>
+<ul>
+<li>O catálogo depende de informação pública disponibilizada pelas próprias instituições — não
+  fazemos verificação presencial nem confirmamos qualidade pedagógica dos cursos.</li>
+<li>Programas sazonais ou por edital podem aparecer temporariamente indisponíveis fora do
+  período de inscrição — nesses casos, o registro é mantido com uma nota, não removido.</li>
+<li>A cobertura é maior para fontes de abrangência nacional e para os setores mais mapeados do
+  catálogo (indústria, tecnologia, governo); setores menos mapeados têm cobertura mais
+  incompleta e estão em expansão contínua.</li>
+</ul>
+<h2>Como sugerir uma correção ou nova fonte</h2>
+<p>Abra uma issue no repositório do projeto no GitHub, indicando o link do curso/programa e o
+motivo da sugestão (fonte nova, dado desatualizado, link quebrado etc.).</p>
+</body>
+</html>
