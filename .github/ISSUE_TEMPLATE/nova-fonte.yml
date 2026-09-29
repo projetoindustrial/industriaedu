@@ -1,0 +1,21 @@
+name: Sugerir nova fonte de curso
+description: Indique um curso ou programa gratuito que deveria estar no catálogo
+labels: ["catalogo", "nova-fonte"]
+body:
+  - type: input
+    id: url
+    attributes: {label: "Link direto da página do curso/programa (não a home do site)"}
+    validations: {required: true}
+  - type: input
+    id: inst
+    attributes: {label: "Instituição ou empresa responsável"}
+    validations: {required: true}
+  - type: dropdown
+    id: gratuito
+    attributes:
+      label: "É realmente gratuito (inclusive o certificado)?"
+      options: ["Sim, totalmente", "Curso grátis, certificado pago", "Não tenho certeza"]
+    validations: {required: true}
+  - type: textarea
+    id: obs
+    attributes: {label: "Área/trilha e observações"}

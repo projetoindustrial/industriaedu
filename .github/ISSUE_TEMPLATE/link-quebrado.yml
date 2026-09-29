@@ -1,0 +1,14 @@
+name: Link quebrado ou desatualizado
+description: Um curso/fonte do catálogo não abre mais ou mudou de endereço
+labels: ["catalogo", "link-quebrado"]
+body:
+  - type: input
+    id: fonte
+    attributes: {label: "Qual fonte? (nome ou id, ex.: s01)"}
+    validations: {required: true}
+  - type: input
+    id: novo
+    attributes: {label: "Endereço novo (se você achou)"}
+  - type: textarea
+    id: obs
+    attributes: {label: "O que aconteceu?", description: "Ex.: página retorna 404, curso virou pago, instituição mudou de site"}
