@@ -53,6 +53,18 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
           <span style={{fontSize:9,color:C.faint,marginLeft:4}}>v3.6</span>
         </button>
 
+        {/* Sites irmãos do projeto industrial — links externos, fora do NAV_ITEMS
+            (view interna) de propósito, pra não brigar com a lógica de hambúrguer
+            mobile de portal/index.html. Adicionado 28/09/2026. */}
+        <a href="https://projetoindustrial.github.io/manutencao/" target="_blank" rel="noopener"
+           style={{fontSize:10,color:C.faint,textDecoration:"none",marginRight:10,whiteSpace:"nowrap"}}>
+          Manutenção ↗
+        </a>
+        <a href="https://projetoindustrial.github.io/caderno/" target="_blank" rel="noopener"
+           style={{fontSize:10,color:C.faint,textDecoration:"none",marginRight:6,whiteSpace:"nowrap"}}>
+          Caderno ↗
+        </a>
+
         {/* Desktop: linha de itens (escondida em telas estreitas via CSS, ver index.html) */}
         <div className="nav-items">
           {NAV_ITEMS.map(([v,l])=>(
