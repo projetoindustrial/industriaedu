@@ -37,6 +37,7 @@ import { ViewProfiles } from "./views/ViewProfiles.jsx";
 import { ViewSectors } from "./views/ViewSectors.jsx";
 import { ViewRedeCarreira } from "./views/ViewRedeCarreira.jsx";
 import { ViewElitePerfis } from "./views/ViewElitePerfis.jsx";
+import { ViewCatalogoCursos } from "./views/ViewCatalogoCursos.jsx";
 
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
 
@@ -168,6 +169,7 @@ export default function App(){
         {view==="home"      && <ViewHome setView={setView}/>}
         {view==="explore"   && <ViewExplore favorites={favs} toggleFav={toggleFav} globalQ={globalQ}/>}
         {view==="trails"    && <ViewTrails favorites={favs} toggleFav={toggleFav}/>}
+        {view==="catalogo"  && <ViewCatalogoCursos/>}
         {view==="profiles"  && <ViewProfiles pendingProfile={pendingProfile} onPendingConsumed={()=>setPendingProfile(null)}/>}
         {view==="gaps"      && <ViewGaps/>}
         {view==="sectors"   && <ViewSectors/>}

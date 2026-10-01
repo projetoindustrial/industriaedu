@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { C, btn } from "../theme/tokens.js";
 import { useData } from "../context/DataContext.js";
 
-const NAV_ITEMS = [["home","Início"],["explore","Explorar"],["trails","Trilhas"],["profiles","Perfis CNCT"],["elite","Perfis de Elite"],["guide","Guia"],["gaps","Cobertura Guia × Atlas"],["sectors","Setores"],["empresas","Empresas"],["mercado","Mercado"],["rede","Rede de Carreira"],["about","Sobre"]];
+const NAV_ITEMS = [["home","Início"],["explore","Explorar"],["trails","Trilhas"],["catalogo","Catálogo de Cursos"],["profiles","Perfis CNCT"],["elite","Perfis de Elite"],["guide","Guia"],["gaps","Cobertura Guia × Atlas"],["sectors","Setores"],["empresas","Empresas"],["mercado","Mercado"],["rede","Rede de Carreira"],["about","Sobre"]];
 
 export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
   const {all,trails,profiles,guideBlocks,complementarity,sectors,companies,mercadoTrabalho,eliteProfiles,search} = useData();
