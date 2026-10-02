@@ -28,6 +28,10 @@ Endpoints: `/api/trilhas`, `/api/perfis`, `/api/companies`, `/api/guide-blocks`,
 `/api/gaps`, `/api/sectors`, `/api/guia`, `/api/sector-fato`, `/api/mercado-trabalho`,
 `/api/sinais-mercado`, `/api/panorama-uf`.
 
+Catálogo de cursos e trilhas (vitrine v19c, tabelas `cat_*`, adicionado em 02/10/2026): `/api/cat/meta`,
+`/api/cat/trilhas`, `/api/cat/trilhas/:codigo`, `/api/cat/cursos` (filtros `bloco`, `trilha`, `instituicao`,
+`papel`, `q`; paginação por cursor `after`/`per_page`) e `/api/cat/cursos/:id`. Código em `src/loadCatalogo.js`.
+
 **Antes de mexer aqui**, leia `PROTOCOLO_BANCO_SITE_MIGRACAO.md` — define o papel MIGRAÇÃO em
 relação às sessões BANCO e SITE, e como evitar que o D1 vire um fork silencioso do `.db` canônico
 (rode `d1/check_drift.py` no início de qualquer sessão nova, mesmo com a migração completa — o

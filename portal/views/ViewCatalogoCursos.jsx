@@ -1,11 +1,9 @@
 // views/ViewCatalogoCursos.jsx — Catálogo de Cursos e Trilhas (tabelas cat_*, vitrine v19c).
 // Fonte: pacote catalogo_v19c_release_completo (30/09/2026). 16.504 cursos, 64 trilhas, 6 blocos.
-// Endpoints em /api/cat/* (ver worker_cat/README_WORKER_CAT.md do pacote) — ainda NÃO publicados
-// no Worker `fato-portal-api` no momento em que esta view foi escrita (01/10/2026); por isso o
-// estado "ainda não publicado" abaixo é tratado como caminho normal, não erro.
+// Endpoints em /api/cat/* (meta, trilhas, cursos), publicados no Worker `fato-portal-api` em 02/10/2026.
 // Dado é outra base (curso individual), distinta das `sources` que ViewExplore.jsx mostra —
 // por isso view própria em vez de misturar com o explorador de fontes existente.
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { C, pill, card, btn, SEL } from "../theme/tokens.js";
 import { getJSON } from "../apiClient.js";
 
@@ -65,7 +63,7 @@ function CursoRow({c}){
 }
 
 export function ViewCatalogoCursos(){
-  const [state,setState] = useState("carregando"); // carregando | pronto | nao_publicado | erro
+  const [state,setState] = useState("carregando"); // carregando | pronto | erro
   const [meta,setMeta] = useState(null);
   const [trilhas,setTrilhas] = useState([]);
   const [blocoSel,setBlocoSel] = useState(null);
@@ -76,19 +74,18 @@ export function ViewCatalogoCursos(){
   const [after,setAfter] = useState(null);
   const [hasMore,setHasMore] = useState(false);
   const [carregandoMais,setCarregandoMais] = useState(false);
+  const [erroLista,setErroLista] = useState(false);
+  const [tentativa,setTentativa] = useState(0);
+  const reqId = useRef(0); // só a resposta da requisição mais recente pode alterar a lista
 
   useEffect(()=>{
     let vivo = true;
+    setState("carregando");
     Promise.all([getJSON("/api/cat/meta"), getJSON("/api/cat/trilhas")])
       .then(([m,t])=>{ if(!vivo) return; setMeta(m); setTrilhas(t); setState("pronto"); })
-      .catch((err)=>{
-        if(!vivo) return;
-        // 404/erro de rede nesta fase inicial == endpoint ainda não publicado no Worker,
-        // não é bug da view. Ver LEIA_PRIMEIRO.md do pacote catalogo_v19c.
-        setState(String(err.message||"").includes("404") ? "nao_publicado" : "erro");
-      });
+      .catch(()=>{ if(vivo) setState("erro"); });
     return ()=>{ vivo=false; };
-  },[]);
+  },[tentativa]);
 
   useEffect(()=>{
     const t = setTimeout(()=>setQDebounced(q.trim()),700); // busca LIKE lê a tabela toda no D1 (~10-16 mil linhas): menos consultas por digitação
@@ -103,15 +100,22 @@ export function ViewCatalogoCursos(){
     if(qDebounced.length>=3) sp.set("q",qDebounced);
     sp.set("per_page",PER_PAGE);
     if(!novoFiltro && after!=null) sp.set("after",after);
+    const meuId = ++reqId.current;
     setCarregandoMais(true);
+    setErroLista(false);
     getJSON(`/api/cat/cursos?${sp.toString()}`)
       .then(d=>{
+        if(meuId!==reqId.current) return; // resposta de um filtro antigo: descarta
         setCursos(prev=> novoFiltro ? d.items : [...prev, ...d.items]);
         setAfter(d.next_after);
         setHasMore(!!d.has_more);
       })
-      .catch(()=>{ setCursos([]); setHasMore(false); })
-      .finally(()=>setCarregandoMais(false));
+      .catch(()=>{
+        if(meuId!==reqId.current) return;
+        if(novoFiltro){ setCursos([]); setHasMore(false); }
+        setErroLista(true);
+      })
+      .finally(()=>{ if(meuId===reqId.current) setCarregandoMais(false); });
   },[state,blocoSel,trilhaSel,qDebounced,after]);
 
   // refiltra do zero quando bloco/trilha/busca mudam
@@ -120,20 +124,13 @@ export function ViewCatalogoCursos(){
   if(state==="carregando"){
     return <div style={{padding:60,textAlign:"center",color:C.muted,fontSize:13}}>Carregando catálogo…</div>;
   }
-  if(state==="nao_publicado"){
+  if(state==="erro"){
     return (
-      <div style={{maxWidth:640,margin:"60px auto",padding:24,...card(C.amberBorderA),textAlign:"center"}}>
-        <div style={{fontSize:14,fontWeight:600,color:C.amberLight,marginBottom:8}}>Catálogo de Cursos ainda não publicado</div>
-        <div style={{fontSize:12.5,color:C.muted,lineHeight:1.6}}>
-          Os endpoints <code>/api/cat/*</code> existem mas ainda não foram publicados no Worker.
-          16.504 cursos e 64 trilhas prontos do lado do banco — falta a carga no D1 e o deploy
-          do Worker (ver <code>LEIA_PRIMEIRO.md</code> do pacote <code>catalogo_v19c</code>).
-        </div>
+      <div style={{padding:60,textAlign:"center",color:C.red,fontSize:13}}>
+        <div>Não foi possível carregar o catálogo agora.</div>
+        <button onClick={()=>setTentativa(n=>n+1)} style={{...btn(C.blueDim2,C.skyBlue,C.blueBorderA),marginTop:14}}>Tentar de novo</button>
       </div>
     );
-  }
-  if(state==="erro"){
-    return <div style={{padding:60,textAlign:"center",color:C.red,fontSize:13}}>Não foi possível carregar o catálogo agora. Tente recarregar a página.</div>;
   }
 
   return (
@@ -167,7 +164,7 @@ export function ViewCatalogoCursos(){
       <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center",marginBottom:16}}>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="🔍 Nome do curso ou instituição (mín. 3 letras)"
           style={{flex:"1 1 220px",padding:"7px 12px",borderRadius:7,border:`1px solid ${C.border}`,background:C.bg,color:C.text,fontSize:12,outline:"none",fontFamily:"inherit"}}/>
-        <select value={trilhaSel} onChange={e=>setTrilhaSel(e.target.value)} style={{...SEL}}>
+        <select value={trilhaSel} onChange={e=>setTrilhaSel(e.target.value)} style={{...SEL,flex:"1 1 220px",minWidth:0,maxWidth:"100%"}}>
           <option value="">Todas as trilhas</option>
           {trilhas.map(t=><option key={t.codigo} value={t.codigo}>{t.codigo} — {t.nome}</option>)}
         </select>
@@ -176,7 +173,13 @@ export function ViewCatalogoCursos(){
 
       <div>
         {cursos.map(c=><CursoRow key={c.id} c={c}/>)}
-        {!carregandoMais && cursos.length===0 && (
+        {!carregandoMais && erroLista && (
+          <div style={{padding:30,textAlign:"center",color:C.red,fontSize:12}}>
+            Não foi possível carregar os cursos agora.{" "}
+            <button onClick={()=>buscarPagina(cursos.length===0)} style={{...btn("transparent",C.skyBlue,C.blueBorderA),fontSize:11}}>Tentar de novo</button>
+          </div>
+        )}
+        {!carregandoMais && !erroLista && cursos.length===0 && (
           <div style={{padding:40,textAlign:"center",color:C.faint,fontSize:12}}>Nenhum curso encontrado com esses filtros.</div>
         )}
       </div>
