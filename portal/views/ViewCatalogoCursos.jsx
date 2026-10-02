@@ -91,7 +91,7 @@ export function ViewCatalogoCursos(){
   },[]);
 
   useEffect(()=>{
-    const t = setTimeout(()=>setQDebounced(q.trim()),300);
+    const t = setTimeout(()=>setQDebounced(q.trim()),700); // busca LIKE lê a tabela toda no D1 (~10-16 mil linhas): menos consultas por digitação
     return ()=>clearTimeout(t);
   },[q]);
 
@@ -157,6 +157,12 @@ export function ViewCatalogoCursos(){
           </button>
         ))}
       </div>
+
+      {blocoSel!=null && (meta?.blocos||[]).find(x=>x.id===blocoSel)?.descricao && (
+        <div style={{fontSize:11.5,color:C.muted,lineHeight:1.55,marginBottom:14,padding:"8px 12px",borderLeft:`2px solid ${C.border}`}}>
+          {(meta.blocos||[]).find(x=>x.id===blocoSel).descricao}
+        </div>
+      )}
 
       <div style={{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center",marginBottom:16}}>
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="🔍 Nome do curso ou instituição (mín. 3 letras)"
