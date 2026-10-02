@@ -16,6 +16,7 @@ import { loadGuideBlocks, loadAtlasTrails, loadElitePerfis, loadNormasCatalogo }
 import { loadSocialBundle, loadTechnicalBundle } from "./loadSocialTechnical.js";
 import { loadComplementarity, loadSectors, loadGuia, loadSectorFato } from "./loadSectorsGuia.js";
 import { loadMercadoTrabalho, loadSinaisMercado, loadPanoramaUF } from "./loadMercado.js";
+import { loadCatMeta, loadCatTrilhas, loadCatTrilha, loadCatCursos, loadCatCurso } from "./loadCatalogo.js";
 
 // Origens autorizadas a chamar a API a partir do navegador. Ajuste aqui se o
 // portal ganhar um domínio próprio no futuro.
@@ -168,6 +169,31 @@ export default {
       if (url.pathname === "/api/panorama-uf" && request.method === "GET") {
         const data = await loadPanoramaUF(env.DB);
         return new Response(JSON.stringify(data), { headers });
+      }
+
+      // ---- Catálogo de cursos e trilhas (tabelas cat_*, vitrine v19c) — adicionado em 30/09/2026 ----
+      if (url.pathname.startsWith("/api/cat/") && request.method === "GET") {
+        const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: headers });
+        const path = url.pathname.replace(/\/+$/, "");
+        let m;
+
+        if (path === "/api/cat/meta") return json(await loadCatMeta(env.DB));
+        if (path === "/api/cat/trilhas") return json(await loadCatTrilhas(env.DB));
+
+        if ((m = path.match(/^\/api\/cat\/trilhas\/([A-Za-z0-9_]{1,20})$/))) {
+          const data = await loadCatTrilha(env.DB, m[1]);
+          return data ? json(data) : json({ error: "trilha não encontrada" }, 404);
+        }
+
+        if (path === "/api/cat/cursos") {
+          const data = await loadCatCursos(env.DB, url.searchParams);
+          return data.erro ? json({ error: data.erro }, 400) : json(data);
+        }
+
+        if ((m = path.match(/^\/api\/cat\/cursos\/(\d{1,9})$/))) {
+          const data = await loadCatCurso(env.DB, Number(m[1]));
+          return data ? json(data) : json({ error: "curso não encontrado" }, 404);
+        }
       }
 
       return new Response(JSON.stringify({ error: "not found" }), {
