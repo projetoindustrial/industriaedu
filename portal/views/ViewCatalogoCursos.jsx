@@ -11,22 +11,42 @@ import { getJSON } from "../apiClient.js";
 
 const PER_PAGE = 30;
 
+// Valores reais de gratuidade_status em cat_cursos (D1, v19c): ok 5.096 · ok_fonte_direta 2.364 ·
+// publico_federal_sem_campo_direto 8.587 · gratuidade_nao_informada 457. Nenhum é literalmente "gratuito".
 function GratBadge({status}){
-  if(status==="gratuito") return <span style={pill(C.greenDim,C.green,C.greenBorder)}>gratuito</span>;
-  if(!status || status==="nao_informada" || status==="não_informada") return <span style={pill(C.surface,C.muted,C.border)}>não informado</span>;
-  return <span style={pill(C.orangeDim,C.orangeLight,C.amberBorderA)}>{status.replace(/_/g," ")}</span>;
+  if(status==="ok") return <span style={pill(C.greenDim,C.green,C.greenBorder)}>gratuito</span>;
+  if(status==="ok_fonte_direta") return <span title="Gratuidade confirmada na fonte direta" style={pill(C.greenDim,C.green,C.greenBorder)}>gratuito · fonte direta</span>;
+  if(status==="publico_federal_sem_campo_direto") return <span title="Oferta de instituição pública federal; a fonte não traz um campo explícito de gratuidade" style={pill(C.blueDim,C.skyBlue,C.blueBorderA)}>rede pública federal</span>;
+  return <span title="A fonte não informa se o curso é gratuito" style={pill("transparent",C.muted,C.border)}>gratuidade não informada</span>;
+}
+
+// modalidade vem com ~25 grafias (EAD, EaD, Educação a Distância, 100% online, HYBRID, PRESENTIAL...).
+// Asset/Guide, Path, Workshop, Collection são tipo de material, não modalidade — não exibidos.
+export function modalidadeCurta(m){
+  if(!m) return null;
+  const s = String(m).toLowerCase();
+  if(s.includes("semi") || s.includes("hybrid") || s.includes("encontros") || s.includes("prática presencial")) return "Híbrido";
+  if(s.includes("mooc")) return "MOOC";
+  if(s.includes("ead") || s.includes("dist") || s.includes("online")) return "EaD";
+  if(s.includes("presencial") || s.startsWith("presenti")) return "Presencial";
+  return null;
 }
 
 function CursoRow({c}){
+  const onde = c.instituicao || c.fonte;
+  const carga = c.carga_horaria && !/^n[ãa]o informada$/i.test(c.carga_horaria) ? c.carga_horaria : null;
+  const modal = modalidadeCurta(c.modalidade);
   return (
     <div style={{padding:"10px 0",borderBottom:`1px solid ${C.border}`,display:"flex",gap:12,alignItems:"flex-start"}}>
       <div style={{flex:1,minWidth:0}}>
         <div style={{fontSize:13,fontWeight:600,color:C.text}}>{c.nome}</div>
-        <div style={{fontSize:11.5,color:C.muted,marginTop:2}}>{c.instituicao}{c.carga_horaria?` · ${c.carga_horaria}`:""}{c.modalidade?` · ${c.modalidade}`:""}</div>
+        <div style={{fontSize:11.5,color:C.muted,marginTop:2}}>{[onde,carga,modal].filter(Boolean).join(" · ")}</div>
         <div style={{display:"flex",gap:6,marginTop:6,flexWrap:"wrap",alignItems:"center"}}>
           <GratBadge status={c.gratuidade_status}/>
           {c.trilha_codigo && <span style={pill(C.blueDim,C.skyBlue,C.blueBorderA)}>{c.trilha_codigo}</span>}
-          {c.fonte && <span style={pill("transparent",C.faint,C.border)}>{c.fonte}</span>}
+          {c.papel==="referencia" && <span title="Material de referência, fora do caminho principal da trilha" style={pill("transparent",C.faint,C.border)}>referência</span>}
+          {c.papel==="alternativa_idioma" && <span style={pill("transparent",C.faint,C.border)}>outro idioma</span>}
+          {c.instituicao && c.fonte && c.fonte!==c.instituicao && <span style={pill("transparent",C.faint,C.border)}>{c.fonte}</span>}
         </div>
       </div>
       {c.url && !c.url_generica && (
@@ -121,7 +141,7 @@ export function ViewCatalogoCursos(){
       <div style={{marginBottom:18}}>
         <h1 style={{fontSize:20,color:C.heading,margin:0}}>Catálogo de Cursos</h1>
         <div style={{fontSize:12,color:C.muted,marginTop:4}}>
-          {meta?.n_cursos?.toLocaleString("pt-BR")} cursos gratuitos catalogados, em {trilhas.length} trilhas · {meta?.gerado_em?`atualizado em ${meta.gerado_em}`:""}
+          {meta?.n_cursos?.toLocaleString("pt-BR")} cursos catalogados, em {trilhas.length} trilhas · {meta?.gerado_em?`atualizado em ${meta.gerado_em}`:""}
         </div>
       </div>
 
