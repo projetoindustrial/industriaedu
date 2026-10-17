@@ -38,6 +38,7 @@ import { ViewSectors } from "./views/ViewSectors.jsx";
 import { ViewRedeCarreira } from "./views/ViewRedeCarreira.jsx";
 import { ViewElitePerfis } from "./views/ViewElitePerfis.jsx";
 import { ViewCatalogoCursos } from "./views/ViewCatalogoCursos.jsx";
+import { ViewVagas } from "./views/ViewVagas.jsx";
 
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
 
@@ -176,6 +177,7 @@ export default function App(){
         {view==="guide"     && <ViewGuideBlocks/>}
         {view==="empresas"  && <ViewEmpresas pendingCompany={pendingCompany} onPendingConsumed={()=>setPendingCompany(null)}/>}
         {view==="mercado"   && <ViewMercadoTrabalho/>}
+        {view==="vagas"     && <ViewVagas/>}
         {view==="rede"      && <ViewRedeCarreira/>}
         {view==="elite"     && <ViewElitePerfis/>}
         {view==="about"     && <ViewAbout/>}
