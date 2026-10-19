@@ -76,6 +76,10 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
                 : countFor(v)!==null && <span style={{fontSize:9,marginLeft:3,color:C.faint}}>{countFor(v)}</span>}
             </button>
           ))}
+          <a href="https://projetoindustrial.github.io/" target="_blank" rel="noopener"
+             style={{padding:"14px 11px",fontSize:12,color:C.faint,textDecoration:"none",whiteSpace:"nowrap"}}>
+            Projeto Industrial ↗
+          </a>
         </div>
 
         {/* Mobile: botão hambúrguer (escondido em telas largas via CSS) */}
@@ -137,6 +141,10 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
                 : countFor(v)!==null && <span style={{fontSize:10,marginLeft:6,color:C.faint}}>{countFor(v)}</span>}
             </button>
           ))}
+          <a href="https://projetoindustrial.github.io/" target="_blank" rel="noopener"
+             style={{textAlign:"left",padding:"12px 8px",color:C.faint,fontSize:13,textDecoration:"none"}}>
+            Projeto Industrial ↗
+          </a>
         </div>
       )}
     </nav>
