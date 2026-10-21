@@ -46,7 +46,7 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
   const selectView=(v)=>{ setView(v); setMobileOpen(false); };
 
   return (
-    <nav style={{background:C.surface,borderBottom:"1px solid #1e293b",padding:"0 20px",position:"sticky",top:0,zIndex:20}}>
+    <nav style={{background:C.surface,borderBottom:"1px solid #243447",padding:"0 20px",position:"sticky",top:0,zIndex:20}}>
       <div style={{maxWidth:1100,margin:"0 auto",display:"flex",alignItems:"center",gap:2}}>
         <button onClick={()=>selectView("home")} style={{background:"none",border:"none",cursor:"pointer",padding:"14px 0",marginRight:10}}>
           <span style={{fontWeight:900,fontSize:13,color:C.social}}>IndústriaEDU</span>
@@ -94,7 +94,7 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
             value={globalQ}
             onChange={e=>setGlobalQ(e.target.value)}
             placeholder="🔍 busca…"
-            style={{background:C.surface,border:"1px solid #1e293b",borderRadius:6,padding:"4px 9px",color:C.text,fontSize:11,width:120,outline:"none",fontFamily:"inherit"}}
+            style={{background:C.surface,border:"1px solid #243447",borderRadius:6,padding:"4px 9px",color:C.text,fontSize:11,width:120,outline:"none",fontFamily:"inherit"}}
           />
           {globalQ&&<button onClick={()=>setGlobalQ("")} style={{background:"none",border:"none",color:C.muted,cursor:"pointer",fontSize:13,padding:"0 2px"}}>✕</button>}
           {favCount>0&&(
@@ -104,7 +104,7 @@ export function Nav({view,setView,favCount,globalQ,setGlobalQ}){
           {/* SP-02B: painel de resultados por categoria */}
           {globalQ.trim()&&(
             <div style={{position:"absolute",top:"calc(100% + 6px)",right:0,width:280,maxWidth:"90vw",maxHeight:420,overflowY:"auto",
-              background:C.surface,border:"1px solid #1e293b",borderRadius:10,boxShadow:"0 12px 28px rgba(0,0,0,.5)",zIndex:30,padding:8}}>
+              background:C.surface,border:"1px solid #243447",borderRadius:10,boxShadow:"0 12px 28px rgba(0,0,0,.5)",zIndex:30,padding:8}}>
               {totalResults===0
                 ?<div style={{fontSize:11,color:C.muted,padding:12,textAlign:"center"}}>Nenhum resultado para "{globalQ}"</div>
                 :["fonte","perfil","trilha"].map(cat=>results[cat].length>0&&(

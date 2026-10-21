@@ -99,7 +99,7 @@ function EliteDetail({ perfil, atlasTrails, onBack }) {
         </div>
         {/* SP-62 (item 13): fonte CNCT + página, e blocos de competência do Atlas de origem */}
         {perfil.atlas_doc&&(perfil.atlas_doc.fontes_cnct||perfil.atlas_doc.codigos_guia)&&(
-          <div style={{marginBottom:10,paddingTop:8,borderTop:"1px solid #1e293b",fontSize:10,color:C.faint}}>
+          <div style={{marginBottom:10,paddingTop:8,borderTop:"1px solid #243447",fontSize:10,color:C.faint}}>
             {perfil.atlas_doc.fontes_cnct&&<div>📖 {perfil.atlas_doc.fontes_cnct}</div>}
             {perfil.atlas_doc.codigos_guia&&<div style={{marginTop:2}}>Blocos: {perfil.atlas_doc.codigos_guia}</div>}
           </div>
@@ -136,7 +136,7 @@ function EliteDetail({ perfil, atlasTrails, onBack }) {
           {sec.blocks.map((b, bi) => b.type === "code" ? (
             <pre key={bi} style={{
               margin: "0 0 8px", padding: 12, background: C.surface3, borderRadius: 7,
-              border: "1px solid #1e293b", fontSize: 10, lineHeight: 1.6, color: C.dim,
+              border: "1px solid #243447", fontSize: 10, lineHeight: 1.6, color: C.dim,
               overflowX: "auto", fontFamily: "'IBM Plex Mono',monospace", whiteSpace: "pre",
             }}>{b.content}</pre>
           ) : (

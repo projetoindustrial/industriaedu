@@ -75,7 +75,7 @@ export function ViewMercadoTrabalho(){
                 <div style={{fontSize:10,color:C.faint,marginBottom:6}}>NOTÍCIAS DE INVESTIMENTO NA INDÚSTRIA</div>
                 <div style={{display:"grid",gap:5}}>
                   {sinaisMercado.noticias.slice(0,5).map((n,i)=>(
-                    <a key={i} href={n.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b",textDecoration:"none"}}>
+                    <a key={i} href={n.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447",textDecoration:"none"}}>
                       <div style={{fontSize:11,color:C.blue}}>{n.titulo}</div>
                       <div style={{fontSize:9,color:C.muted,marginTop:2}}>{n.uf} · {n.setor_impactado}{n.valor_investido?` · ${fmtMoeda(n.valor_investido)}`:""}{n.empregos_prometidos?` · ${fmtNum(n.empregos_prometidos)} empregos prometidos`:""}</div>
                     </a>
@@ -88,7 +88,7 @@ export function ViewMercadoTrabalho(){
                 <div style={{fontSize:10,color:C.faint,marginBottom:6}}>CONCURSOS TÉCNICOS ABERTOS</div>
                 <div style={{display:"grid",gap:5}}>
                   {sinaisMercado.concursos.slice(0,5).map((c,i)=>(
-                    <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b",textDecoration:"none",gap:8}}>
+                    <a key={i} href={c.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447",textDecoration:"none",gap:8}}>
                       <div style={{minWidth:0}}>
                         <div style={{fontSize:11,color:C.blue}}>{c.cargo}</div>
                         <div style={{fontSize:9,color:C.muted}}>{c.orgao} · {c.uf}</div>
@@ -107,7 +107,7 @@ export function ViewMercadoTrabalho(){
                 <div style={{fontSize:10,color:C.faint,marginBottom:6}}>COMPRAS GOVERNAMENTAIS RECENTES (SINAL DE DEMANDA)</div>
                 <div style={{display:"grid",gap:5}}>
                   {sinaisMercado.comprasGoverno.slice(0,5).map((c,i)=>(
-                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b",gap:8}}>
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447",gap:8}}>
                       <div style={{minWidth:0}}>
                         <div style={{fontSize:11,color:C.text}}>{c.orgao}</div>
                         <div style={{fontSize:9,color:C.muted}}>{c.descricao}</div>
@@ -136,7 +136,7 @@ export function ViewMercadoTrabalho(){
         {panoramaOpen&&(
           <div style={{padding:"0 14px 14px",display:"grid",gap:8}}>
             {panoramaUF.map(p=>(
-              <div key={p.uf} style={{padding:"10px 12px",background:C.surface3,borderRadius:8,border:"1px solid #1e293b"}}>
+              <div key={p.uf} style={{padding:"10px 12px",background:C.surface3,borderRadius:8,border:"1px solid #243447"}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
                   <span style={{fontSize:13,fontWeight:700,color:C.heading}}>{p.uf}</span>
                   {p.score_demanda_total>0&&<span style={{...pill(C.blueDim,C.blue),fontSize:9}}>score demanda {p.score_demanda_total.toFixed(1)}</span>}
@@ -216,13 +216,13 @@ export function ViewMercadoTrabalho(){
               </div>
 
               {isOpen && (
-                <div style={{marginTop:12,paddingTop:12,borderTop:"1px solid #1e293b"}}>
+                <div style={{marginTop:12,paddingTop:12,borderTop:"1px solid #243447"}}>
                   <div style={{fontSize:9,color:C.muted,fontWeight:700,marginBottom:8,textTransform:"uppercase",letterSpacing:1}}>
                     Detalhe por estado ({m.total_ufs} UFs)
                   </div>
                   <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(140px,1fr))",gap:6}}>
                     {m.detalhe_uf.map(u=>(
-                      <div key={u.uf} style={{background:C.surface3,borderRadius:6,padding:"6px 8px",border:"1px solid #1e293b"}}>
+                      <div key={u.uf} style={{background:C.surface3,borderRadius:6,padding:"6px 8px",border:"1px solid #243447"}}>
                         <div style={{display:"flex",justifyContent:"space-between",fontSize:10}}>
                           <span style={{fontWeight:700,color:C.text}}>{u.uf}</span>
                           <span style={{color: u.tendencia==="Alta"?C.emerald:C.muted}}>{u.tendencia==="Alta"?"📈":"–"}</span>

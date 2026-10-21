@@ -19,13 +19,13 @@ export function ViewHome({setView}){
         <div style={{fontSize:11,letterSpacing:4,color:C.social,textTransform:"uppercase",marginBottom:10}}>Portal Aberto · Junho 2026</div>
         <h1 style={{margin:"0 0 12px",fontSize:"clamp(22px,5vw,40px)",fontWeight:900,color:C.heading,letterSpacing:-1,lineHeight:1.1}}>
           Educação Industrial<br/>
-          <span style={{background:"linear-gradient(90deg,#6366f1,#0891b2)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>100% Gratuita</span>
+          <span style={{background:"linear-gradient(90deg,#9377e2,#1c98a8)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>100% Gratuita</span>
         </h1>
         <p style={{margin:"0 0 28px",fontSize:14,color:C.dim,maxWidth:520,marginLeft:"auto",marginRight:"auto",lineHeight:1.7}}>
           O maior mapeamento de fontes educacionais gratuitas para a indústria brasileira. Programas sociais, qualificação técnica e trilhas de carreira curadas.
         </p>
         <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-          <button onClick={()=>setView("explore")} style={{...btn("linear-gradient(135deg,#6366f1,#0891b2)",C.white,"transparent"),fontSize:13,padding:"10px 22px",borderRadius:9}}>
+          <button onClick={()=>setView("explore")} style={{...btn("linear-gradient(135deg,#9377e2,#1c98a8)",C.white,"transparent"),fontSize:13,padding:"10px 22px",borderRadius:9}}>
             🔍 Explorar {all.length} fontes
           </button>
           <button onClick={()=>setView("trails")} style={{...btn(C.purpleDim,C.indigoLight,C.indigoDark),fontSize:13,padding:"10px 22px",borderRadius:9}}>

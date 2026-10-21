@@ -3,12 +3,12 @@
 //   api-base     (obrigatório) base da API; vazio = mesma origem
 //   empresa-url  (opcional) modelo do link da empresa no portal, com {slug}; sem ele o nome não vira link
 // Só lê /api/vagas/meta e /api/vagas. Todo texto da API entra por textContent (nada de innerHTML com dado).
-const CSS = `:host{display:block;font:14px/1.4 system-ui,sans-serif;color:var(--av-fg,#1f2937)}
+const CSS = `:host{display:block;font:14px/1.4 system-ui,sans-serif;color:var(--av-fg,#172b3a)}
 .nota{font-size:12px;opacity:.75;margin:0 0 10px}.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-select,input{font:inherit;padding:6px 8px;border:1px solid var(--av-borda,#cbd5e1);border-radius:8px;background:var(--av-bg,#fff);color:inherit;min-width:0}
-input{flex:1 1 160px}.card{border:1px solid var(--av-borda,#cbd5e1);border-radius:10px;padding:10px 12px;margin:0 0 8px;background:var(--av-bg,#fff)}
-.t{font-weight:600}.s{font-size:12px;opacity:.8;margin-top:2px}a.b{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:8px;background:var(--av-cor,#2563eb);color:#fff;text-decoration:none;font-size:13px}
-a.b.m{background:#b45309}button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--av-borda,#cbd5e1);background:transparent;color:inherit;cursor:pointer}.vazio,.erro{padding:14px;text-align:center;opacity:.8}.erro{color:#b91c1c;opacity:1}`;
+select,input{font:inherit;padding:6px 8px;border:1px solid var(--av-borda,#d0d9e0);border-radius:8px;background:var(--av-bg,#fff);color:inherit;min-width:0}
+input{flex:1 1 160px}.card{border:1px solid var(--av-borda,#d0d9e0);border-radius:10px;padding:10px 12px;margin:0 0 8px;background:var(--av-bg,#fff)}
+.t{font-weight:600}.s{font-size:12px;opacity:.8;margin-top:2px}a.b{display:inline-block;margin-top:8px;padding:6px 10px;border-radius:8px;background:var(--av-cor,#0e5263);color:#fff;text-decoration:none;font-size:13px}
+a.b.m{background:#8a5a00}button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--av-borda,#d0d9e0);background:transparent;color:inherit;cursor:pointer}.vazio,.erro{padding:14px;text-align:center;opacity:.8}.erro{color:#a82f2f;opacity:1}`;
 const h = (tag, props, ...kids) => { const e = document.createElement(tag); Object.assign(e, props || {}); kids.flat().forEach((k) => e.append(k)); return e; };
 const dmy = (iso, aprox) => (iso ? (aprox ? "~" : "") + iso.slice(8, 10) + "/" + iso.slice(5, 7) + "/" + iso.slice(0, 4) : "");
 const seguro = (u) => /^https?:\/\//i.test(u || "");

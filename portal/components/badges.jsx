@@ -89,7 +89,7 @@ export function NormaBadge({code,baseStyle}){
       {open&&(
         <div onClick={e=>e.stopPropagation()}
           style={{position:"absolute",zIndex:20,top:"100%",left:0,marginTop:4,minWidth:220,maxWidth:280,
-            background:C.surfacePanel||C.surface3,border:"1px solid #1e293b",borderRadius:8,padding:10,
+            background:C.surfacePanel||C.surface3,border:"1px solid #243447",borderRadius:8,padding:10,
             boxShadow:"0 8px 24px rgba(0,0,0,.4)"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
             <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:11,fontWeight:700,color:C.heading}}>{code}</span>

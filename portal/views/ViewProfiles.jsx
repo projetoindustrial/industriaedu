@@ -81,7 +81,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
           {/* SP-62 (item 13): fonte CNCT + página, e blocos de competência do documento Atlas —
               contexto editorial que não existia em nenhuma tela antes desta sessão */}
           {t.atlas_doc&&(
-            <div style={{marginTop:8,paddingTop:8,borderTop:"1px solid #1e293b",fontSize:10,color:C.faint}}>
+            <div style={{marginTop:8,paddingTop:8,borderTop:"1px solid #243447",fontSize:10,color:C.faint}}>
               {t.atlas_doc.fontes_cnct&&<div>📖 {t.atlas_doc.fontes_cnct}</div>}
               {t.atlas_doc.codigos_guia&&<div style={{marginTop:2}}>Blocos: {t.atlas_doc.codigos_guia}</div>}
             </div>
@@ -175,7 +175,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
               </div>
               <div style={{display:"grid",gap:4}}>
                 {t.nucleo.map((u,i)=>(
-                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                     <div style={{display:"flex",alignItems:"center",gap:8}}>
                       <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:9,color:C.faint,minWidth:40}}>{u.codigo}</span>
                       <span style={{fontSize:11,color:C.text}}>{u.nome}</span>
@@ -200,7 +200,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
             </div>
             <div style={{display:"grid",gap:10}}>
               {t.curriculo_detalhado.map((d,i)=>(
-                <div key={i} style={{padding:"10px 12px",background:C.surface3,borderRadius:8,border:"1px solid #1e293b"}}>
+                <div key={i} style={{padding:"10px 12px",background:C.surface3,borderRadius:8,border:"1px solid #243447"}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:6,gap:8}}>
                     <span style={{fontSize:11,fontWeight:700,color:C.heading}}>{d.nivel}</span>
                     {d.carga_estimada&&<span style={{fontSize:9,color:C.muted,flexShrink:0,whiteSpace:"nowrap"}}>{d.carga_estimada}</span>}
@@ -363,7 +363,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
                 <div style={{fontSize:9,color:C.faint,marginBottom:6}}>PERFIS QUASE-EQUIVALENTES</div>
                 <div style={{display:"grid",gap:5}}>
                   {p.sinonimos.map((s,i)=>(
-                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                       <span style={{fontSize:11,color:C.text}}>{s.outro_nome}</span>
                       <span style={{fontSize:9,color:C.muted}}>{(s.overlap*100).toFixed(0)}% overlap</span>
                     </div>
@@ -382,7 +382,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
             </div>
             <div style={{display:"grid",gap:6}}>
               {p.onde_estudar.slice(0,6).map((r,i)=>(
-                <div key={i} style={{padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                <div key={i} style={{padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:8}}>
                     <span style={{fontSize:11,color:C.text,fontWeight:600}}>{r.instituicao}{r.uf?` (${r.uf})`:""}</span>
                     {r.selo_emec&&<span style={{fontSize:10}}>{r.selo_emec}</span>}
@@ -407,7 +407,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
             </div>
             <div style={{display:"grid",gap:6}}>
               {p.roteiro_carreira.map((r,i)=>(
-                <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                <div key={i} style={{display:"flex",alignItems:"center",gap:10,padding:"7px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                   <div style={{width:20,height:20,borderRadius:"50%",background:C.border,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,fontWeight:800,color:C.dim,flexShrink:0}}>{r.ordem_passo}</div>
                   <div style={{flex:1,minWidth:0}}>
                     {r.url?(
@@ -434,7 +434,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
               {p.premio_transferencia.slice(0,5).map((r,i)=>{
                 const positivo=r.diferenca_mensal>0;
                 return(
-                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b",gap:10}}>
+                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447",gap:10}}>
                     <div style={{minWidth:0}}>
                       <div style={{fontSize:11,color:C.text,fontWeight:600}}>{r.destino_nome}</div>
                       <div style={{fontSize:9,color:C.muted}}>{r.recomendacao}</div>
@@ -471,7 +471,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
                 style={{...SEL,width:"100%",marginBottom:10,boxSizing:"border-box"}}/>
               <div style={{display:"grid",gap:6}}>
                 {visible.map((r,i)=>(
-                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b",gap:10}}>
+                  <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447",gap:10}}>
                     <div style={{minWidth:0}}>
                       <div style={{fontSize:11,color:C.text,fontWeight:600}}>{r.destino_nome}</div>
                       <div style={{fontSize:9,color:C.muted}}>{r.nivel}</div>
@@ -516,7 +516,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
               const t=atlasTrails.find(x=>x.code===code&&x.atlas_num===atlas_num);
               return(
                 <button key={`${code}-${atlas_num}`} onClick={()=>t&&setTrailDetail(t)}
-                  style={{...pill(C.blueDim,C.blue),cursor:t?"pointer":"default",fontSize:10,border:"1px solid #1e3a8a"}}>
+                  style={{...pill(C.blueDim,C.blue),cursor:t?"pointer":"default",fontSize:10,border:"1px solid #2a747e"}}>
                   {code}{t&&<span style={{fontSize:9,color:C.faint,marginLeft:3}}>·{t.atlas_num}</span>}
                 </button>
               );
