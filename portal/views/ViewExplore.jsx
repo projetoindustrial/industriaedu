@@ -61,7 +61,7 @@ export function ViewExplore({favorites,toggleFav,globalQ=""}){
 
   return (
     <div>
-      <div style={{background:C.surface2,borderBottom:"1px solid #1e293b",padding:"12px 24px",position:"sticky",top:48,zIndex:10}}>
+      <div style={{background:C.surface2,borderBottom:"1px solid #243447",padding:"12px 24px",position:"sticky",top:48,zIndex:10}}>
         <div style={{maxWidth:1100,margin:"0 auto"}}>
           <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap",alignItems:"center"}}>
             {[["all","Tudo",C.text],["social","Social",C.social],["technical","Técnica",C.tech]].map(([v,l,c])=>(
@@ -70,7 +70,7 @@ export function ViewExplore({favorites,toggleFav,globalQ=""}){
                 {l}
               </button>
             ))}
-            <div style={{display:"flex",borderRadius:7,overflow:"hidden",border:"1px solid #1e293b",marginLeft:4}}>
+            <div style={{display:"flex",borderRadius:7,overflow:"hidden",border:"1px solid #243447",marginLeft:4}}>
               {[["grid","▦"],["list","☰"]].map(([m,icon])=>(
                 <button key={m} onClick={()=>setViewMode(m)}
                   style={{padding:"4px 11px",border:"none",background:viewMode===m?C.border:"transparent",color:viewMode===m?C.text:C.muted,cursor:"pointer",fontSize:13,fontFamily:"inherit"}}>{icon}</button>
@@ -82,7 +82,7 @@ export function ViewExplore({favorites,toggleFav,globalQ=""}){
           </div>
           <div style={{display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
             <input value={q} onChange={e=>setQ(e.target.value)} placeholder="🔍 Empresa, programa, CNCT, tag..."
-              style={{flex:"1 1 180px",padding:"7px 12px",borderRadius:7,border:"1px solid #1e293b",background:C.bg,color:C.text,fontSize:12,outline:"none",fontFamily:"inherit"}}/>
+              style={{flex:"1 1 180px",padding:"7px 12px",borderRadius:7,border:"1px solid #243447",background:C.bg,color:C.text,fontSize:12,outline:"none",fontFamily:"inherit"}}/>
             <select value={sector} onChange={e=>setSector(e.target.value)} style={{...SEL}}>
               {sectors.map(s=><option key={s} value={s}>{s==="Todos"?`Todos (${all.filter(c=>layer==="all"||c.layer===layer).length})`:`${s} (${sectorCounts[s]||0})`}</option>)}
             </select>
@@ -119,8 +119,8 @@ export function ViewExplore({favorites,toggleFav,globalQ=""}){
 
       <div style={{maxWidth:1100,margin:"0 auto",padding:"16px 20px"}}>
         {viewMode==="list"?(
-          <div style={{background:C.surface,border:"1px solid #1e293b",borderRadius:10,overflow:"hidden"}}>
-            <div style={{display:"grid",gridTemplateColumns:"3px 150px 1fr 160px 110px 60px 28px",gap:8,padding:"7px 14px",borderBottom:"2px solid #1e293b",background:C.surface3}}>
+          <div style={{background:C.surface,border:"1px solid #243447",borderRadius:10,overflow:"hidden"}}>
+            <div style={{display:"grid",gridTemplateColumns:"3px 150px 1fr 160px 110px 60px 28px",gap:8,padding:"7px 14px",borderBottom:"2px solid #243447",background:C.surface3}}>
               <div/><div style={{fontSize:9,color:C.faint,textTransform:"uppercase",letterSpacing:1}}>Empresa</div>
               <div style={{fontSize:9,color:C.faint,textTransform:"uppercase",letterSpacing:1}}>Programa</div>
               <div style={{fontSize:9,color:C.faint,textTransform:"uppercase",letterSpacing:1}}>Setor</div>
@@ -131,7 +131,7 @@ export function ViewExplore({favorites,toggleFav,globalQ=""}){
               const f2=formatMeta[s.format]||{label:s.format||"EAD",color:C.green,bg:C.greenDim};
               const lay=LAYER_META[s.layer];
               return (
-                <div key={s.id} style={{display:"grid",gridTemplateColumns:"3px 150px 1fr 160px 110px 60px 28px",gap:8,padding:"9px 14px",borderBottom:"1px solid #1e293b",background:i%2?C.surface3:C.surface,alignItems:"center"}}
+                <div key={s.id} style={{display:"grid",gridTemplateColumns:"3px 150px 1fr 160px 110px 60px 28px",gap:8,padding:"9px 14px",borderBottom:"1px solid #243447",background:i%2?C.surface3:C.surface,alignItems:"center"}}
                   onMouseEnter={e=>e.currentTarget.style.background=C.hoverBg}
                   onMouseLeave={e=>e.currentTarget.style.background=i%2?C.surface3:C.surface}>
                   <div style={{width:3,height:28,background:lay.accent,borderRadius:99,alignSelf:"center"}}/>

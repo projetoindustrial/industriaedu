@@ -57,7 +57,7 @@ export function ViewGaps(){
               </div>
               <div style={{display:"grid",gap:6}}>
                 {candidates.map(c=>(
-                  <div key={c.atlas_num} style={{padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                  <div key={c.atlas_num} style={{padding:"8px 10px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                     <div style={{fontSize:11,fontWeight:600,color:C.text}}>{c.name}</div>
                     <div style={{fontSize:10,color:C.muted}}>Atlas {c.atlas_num} · {c.atlas_name}</div>
                   </div>

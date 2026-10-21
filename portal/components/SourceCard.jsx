@@ -48,7 +48,7 @@ export function SourceCard({s,favorites,toggleFav,expanded,onExpand,mini}){
         </div>
       </div>
       {expanded&&(
-        <div style={{borderTop:"1px solid #1e293b",padding:"12px 14px",background:C.surface3}}>
+        <div style={{borderTop:"1px solid #243447",padding:"12px 14px",background:C.surface3}}>
           {s.audience&&(
             <div style={{fontSize:11,color:C.dim,marginBottom:8,lineHeight:1.5}}>
               <span style={{color:C.text,fontWeight:600}}>Público: </span>{s.audience}
@@ -69,7 +69,7 @@ export function SourceCard({s,favorites,toggleFav,expanded,onExpand,mini}){
             </div>
           )}
           {s.caminhos_cbo&&(
-            <div style={{marginBottom:8,padding:10,background:C.surfacePanel,borderRadius:8,border:"1px solid #1e293b"}}>
+            <div style={{marginBottom:8,padding:10,background:C.surfacePanel,borderRadius:8,border:"1px solid #243447"}}>
               <div style={{fontSize:9,color:C.faint,marginBottom:6,textTransform:"uppercase",letterSpacing:1}}>
                 Caminhos CBO · {s.caminhos_cbo.course_name}
               </div>

@@ -1,4 +1,7 @@
 // theme/tokens.js — Sistema de tokens de cor e helpers de estilo.
+// Design System v2 (out/2026): valores recalculados a partir dos tokens do DS (tema escuro); os NOMES e o
+// significado semântico abaixo não mudaram. Verde/vermelho/amarelo/azul seguem status-success/danger/warning/text-link;
+// o violeta de "rede" é EXTENSÃO ao DS (matiz 256°), mesmo tratamento de saturação e contraste (>=4,5:1 sobre o card).
 // Extraído de App.jsx (linhas 39-51 originais) na quebra do monólito (D98/D99, 05/07/2026).
 // Paleta expandida em 05/07/2026 (D97) — as 76 cores que antes estavam soltas pelo arquivo,
 // nomeadas num só lugar. Ver ESTUDO_ARQUITETURA_E_PLANO.md seção 4.
@@ -25,11 +28,11 @@
 // um identificador oficial (mesma família de TRL-xx), não uma relação. Ver _DECISIONS.md D109.
 
 export const C = {
-  bg:"#060810",surface:"#0f172a",surface2:"#0a0d18",border:"#1e293b",
-  text:"#e2e8f0",muted:"#64748b",dim:"#94a3b8",
-  social:"#6366f1",tech:"#0891b2",green:"#10b981",amber:"#f59e0b",
-  purple:"#7c3aed",orange:"#f97316",
-  amberBorderA:"#92400e44",amberLight:"#fbbf24",blue:"#60a5fa",blueBorderA:"#0369a144",blueBorderA2:"#1e3a8a44",blueBorderA3:"#1e3a8a33",blueBorderA4:"#1e40af55",blueDark:"#1e3a8a",blueDim:"#0c1a3a",blueDim2:"#0c2333",borderLight:"#334155",emerald:"#34d399",faint:"#475569",greenBorder:"#15803d",greenBorderA:"#16a34a44",greenBorderA2:"#22c55e44",greenBright:"#22c55e",greenDark:"#065f46",greenDim:"#052e1c",greenDim2:"#0c2a1e",greenDim3:"#0c2a0c",greenDim4:"#14290f",greenLight:"#4ade80",heading:"#f1f5f9",hoverBg:"#0c1830",indigoBorderA:"#4338ca44",indigoBorderA2:"#4338ca66",indigoBorderA3:"#3730a344",indigoBorderA4:"#3730a333",indigoBright:"#818cf8",indigoDark:"#3730a3",indigoLight:"#a5b4fc",lime:"#a3e635",limeBorderA:"#a3e63533",orangeBorderA:"#c2410c44",orangeDim:"#1c0f00",orangeDim2:"#1c1207",orangeDim3:"#291a00",orangeDim4:"#1a1000",orangeLight:"#fb923c",purpleBorderA:"#7c3aed44",purpleDim:"#1e1b4b",purpleDim2:"#3b0764",purpleDim3:"#1e0a3c",purpleLight:"#a78bfa",purpleSoft:"#c4b5fd",red:"#f87171",redBorder:"#7f1d1d",redBorderA:"#f8717122",redBorderA2:"#f8717144",redBright:"#ef4444",redDim:"#450a0a",redDim2:"#1c0a0a",redDim3:"#2a0f0f",skyBlue:"#38bdf8",surface3:"#080d18",surfacePanel:"#0c1322",textSoft:"#cbd5e1",tierT2:"#3b82f6",tierT4:"#8b5cf6",warmGray:"#78716c",white:"#fff",yellow:"#facc15",
+  bg:"#0b1520",surface:"#142333",surface2:"#0b1520",border:"#243447",
+  text:"#d4dee5",muted:"#7c92a3",dim:"#8ba3b5",
+  social:"#9377e2",tech:"#1c98a8",green:"#23a66a",amber:"#db9d25",
+  purple:"#9478e2",orange:"#e0a42f",
+  amberBorderA:"#83601d44",amberLight:"#e3aa3c",blue:"#71dbe9",blueBorderA:"#14819044",blueBorderA2:"#2a747e44",blueBorderA3:"#2a747e33",blueBorderA4:"#2e929f55",blueDark:"#2a747e",blueDim:"#113135",blueDim2:"#102b2f",borderLight:"#5f7890",emerald:"#45c289",faint:"#7a8d9c",greenBorder:"#21744e",greenBorderA:"#26936144",greenBorderA2:"#34b37944",greenBright:"#34b379",greenDark:"#105535",greenDim:"#0a291b",greenDim2:"#0f271c",greenDim3:"#0f271c",greenDim4:"#12261d",greenLight:"#5ace99",heading:"#e8eef2",hoverBg:"#1b3242",indigoBorderA:"#917cce44",indigoBorderA2:"#917cce66",indigoBorderA3:"#553d9644",indigoBorderA4:"#553d9633",indigoBright:"#a78eeb",indigoDark:"#553d96",indigoLight:"#c1aff2",lime:"#48d393",limeBorderA:"#48d39333",orangeBorderA:"#ae7e2044",orangeDim:"#191103",orangeDim2:"#1a1409",orangeDim3:"#241a05",orangeDim4:"#171003",orangeLight:"#e6b351",purpleBorderA:"#9478e244",purpleDim:"#2a2046",purpleDim2:"#25115a",purpleDim3:"#1a1036",purpleLight:"#ae97ee",purpleSoft:"#ccbdf5",red:"#e98080",redBorder:"#742828",redBorderA:"#e9808022",redBorderA2:"#e9808044",redBright:"#df6464",redDim:"#3f1010",redDim2:"#1a0c0c",redDim3:"#271212",skyBlue:"#4dd1e3",surface3:"#0b1520",surfacePanel:"#0f1c28",textSoft:"#c1ced8",tierT2:"#50d0e1",tierT4:"#9476e7",warmGray:"#778b9c",white:"#ffffff",yellow:"#e1a42e",
 };
 
 export const pill=(bg,color,border)=>({fontSize:10,padding:"2px 9px",borderRadius:99,background:bg,color,border:`1px solid ${border||color+"44"}`,whiteSpace:"nowrap",fontWeight:600,display:"inline-flex",alignItems:"center",gap:3});

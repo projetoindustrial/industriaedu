@@ -24,7 +24,7 @@ export function ViewAbout(){
           <p style={{margin:0,fontSize:12,color:C.dim,lineHeight:1.7}}>{content}</p>
         </div>
       ))}
-      <div style={{marginTop:16,padding:"12px 16px",background:C.surface2,border:"1px solid #1e293b",borderRadius:8,fontSize:11,color:C.faint}}>
+      <div style={{marginTop:16,padding:"12px 16px",background:C.surface2,border:"1px solid #243447",borderRadius:8,fontSize:11,color:C.faint}}>
         Mapeamento + Guia v6.3 + Atlas IndústriaEDU v1.2 · v3.2 · Junho 2026
       </div>
     </div>

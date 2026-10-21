@@ -151,7 +151,7 @@ export function ViewSectors(){
                     {fato.profiles.map((p,i)=>{
                       const match=profiles&&profiles.find(x=>x.name&&p.perfil_cnct&&x.name.toLowerCase().includes(p.perfil_cnct.toLowerCase().replace(/#\d+\s*/,"")));
                       return(
-                        <div key={i} style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:6,padding:"6px 8px",background:C.surface3,borderRadius:6,border:"1px solid #1e293b"}}>
+                        <div key={i} style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",gap:6,padding:"6px 8px",background:C.surface3,borderRadius:6,border:"1px solid #243447"}}>
                           <div style={{flex:1}}>
                             <div style={{fontSize:10,color:C.text,fontWeight:600,lineHeight:1.3}}>{p.perfil_cnct}</div>
                             {p.cbo&&<div style={{fontSize:9,color:C.faint,fontFamily:"'IBM Plex Mono',monospace",marginTop:2}}>CBO {p.cbo}</div>}
