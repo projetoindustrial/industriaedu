@@ -86,6 +86,10 @@
         .nav-items { display: none; }
         .nav-hamburger { display: inline-flex; }
       }
+    
+      /* DS v2.1: foco visível e alvos de toque >= 44px */
+      :focus-visible { outline: 2px solid #00c4c4; outline-offset: 2px; }
+      @media (pointer: coarse) { button, [role="button"], select, a.btn { min-height: 44px; } }
     </style>
   <!-- Casca compartilhada do Projeto Industrial (menu único em /shell/nav.json) -->
 <link rel="stylesheet" href="/shell/pi-shell.css">
