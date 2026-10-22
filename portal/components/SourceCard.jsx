@@ -42,7 +42,7 @@ export function SourceCard({s,favorites,toggleFav,expanded,onExpand,mini}){
           </div>
         </div>
         <div style={{fontSize:10,color:C.dim,marginBottom:5,fontStyle:"italic"}}>{s.program}</div>
-        <div style={{fontSize:11,color:C.textSoft,lineHeight:1.5,marginBottom:8}}>{s.highlight}</div>
+        <div style={{fontSize:11,color:C.text,lineHeight:1.5,marginBottom:8}}>{s.highlight}</div>
         <div style={{display:"flex",flexWrap:"wrap",gap:3}}>
           {(s.tags||[]).slice(0,mini?4:undefined).map(t=><Tag key={t} label={t}/>)}
         </div>

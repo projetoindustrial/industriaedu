@@ -108,7 +108,7 @@ export function ViewProfiles({pendingProfile, onPendingConsumed}){
                 <div>
                   <div style={{fontSize:9,color:C.faint}}>DIFICULDADE ESTIMADA</div>
                   <div style={{fontSize:13,fontWeight:700,color:C.heading}}>{t.dificuldade.nivel}</div>
-                  {t.dificuldade.tem_pre_requisito&&<div style={{fontSize:9,color:C.orangeLight}}>Tem pré-requisito</div>}
+                  {t.dificuldade.tem_pre_requisito&&<div style={{fontSize:9,color:C.caution}}>Tem pré-requisito</div>}
                 </div>
               )}
               {t.versatilidade&&(
