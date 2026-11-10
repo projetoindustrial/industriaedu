@@ -14,6 +14,11 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="IndústriaEDU — mapeamento de cursos e fontes de formação técnica na indústria brasileira" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://projetoindustrial.github.io/industriaedu/" />
+    <!-- Versão legível sem JavaScript (pessoas e assistentes de IA): gerada por tools/gerar_texto.mjs -->
+    <link rel="alternate" type="text/html" href="./texto/" title="Versão em texto" />
+    <link rel="alternate" type="text/plain" href="./llms.txt" title="llms.txt" />
+    <noscript><style>#splash{display:none}</style></noscript>
 
     <!-- React 18 (auto-hospedado — ver nota de tipografia abaixo pro motivo da troca de CDN, 19/07/2026) -->
     <script crossorigin="anonymous" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" src="./vendor/react.production.min.js"></script>
@@ -103,7 +108,23 @@
       <div id="splash-sub">Carregando banco de dados…</div>
     </div>
 
-    <div id="root"></div>
+    <!-- Conteúdo inicial legível sem JavaScript. O React (createRoot) substitui tudo dentro de #root ao montar,
+         então o portal interativo continua idêntico; isto só aparece para quem não executa JS. -->
+    <div id="root">
+      <main>
+        <h1>IndústriaEDU</h1>
+        <p>Catálogo gratuito de educação e mercado de trabalho para a indústria brasileira: trilhas de carreira, perfis técnicos do CNCT, empresas e normas. Este portal interativo precisa de JavaScript.</p>
+        <p>Versão em texto simples, sem JavaScript:</p>
+        <ul>
+          <li><a href="./texto/">Índice em texto</a></li>
+          <li><a href="./texto/trilhas.html">Trilhas de carreira</a></li>
+          <li><a href="./texto/perfis.html">Perfis técnicos (CNCT)</a></li>
+          <li><a href="./texto/empresas.html">Empresas</a></li>
+          <li><a href="./texto/normas.html">Normas e referências</a></li>
+          <li><a href="./llms.txt">llms.txt (para assistentes de IA)</a></li>
+        </ul>
+      </main>
+    </div>
 
     <!--
       ATUALIZAÇÃO (24/09/2026, SP-75): removido o bootstrap que carregava `db.js` como módulo

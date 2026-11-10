@@ -32,3 +32,16 @@ Actions (`.github/workflows/deploy-pages.yml`). O Worker é publicado separadame
 
 Notas de construção, protocolo de sessões e histórico de desenvolvimento ficam na branch
 `docs-internos`, fora da `main`, para manter o repositório público focado no produto.
+
+## Versão em texto (para pessoas e assistentes de IA)
+
+O portal interativo depende de JavaScript. Para que o conteúdo também seja legível sem ele, há uma
+camada paralela em `portal/texto/` (trilhas, perfis, empresas, normas, CSV/JSONL), mais `portal/llms.txt`
+e `portal/sitemap.xml`. Ela é gerada pelo script `tools/gerar_texto.mjs` (Node 20+, sem dependências):
+
+```
+node tools/gerar_texto.mjs --base https://<worker>.workers.dev   # lê a API ao vivo
+node tools/gerar_texto.mjs --json-dir ./dump                      # ou JSONs locais
+```
+
+Regere e publique sempre que os dados do banco mudarem. Normas pagas aparecem só como referência.

@@ -1,0 +1,23 @@
+# IndústriaEDU
+
+> Catálogo gratuito de educação e mercado de trabalho para a indústria brasileira: 106 trilhas de carreira, 111 perfis técnicos do CNCT, 970 empresas e 266 normas/referências. O portal interativo precisa de JavaScript; esta é a versão em texto simples, legível sem JavaScript.
+
+## Páginas
+- [Índice em texto](https://projetoindustrial.github.io/industriaedu/texto/): ponto de partida
+- [Trilhas de carreira](https://projetoindustrial.github.io/industriaedu/texto/trilhas.html): 106 trilhas, uma página por trilha, com etapas e escolas/cursos
+- [Perfis técnicos CNCT](https://projetoindustrial.github.io/industriaedu/texto/perfis.html): CBO, qualificações, campo de atuação
+- [Empresas](https://projetoindustrial.github.io/industriaedu/texto/empresas.html): empresas industriais, UF, setores
+- [Normas e referências](https://projetoindustrial.github.io/industriaedu/texto/normas.html): só metadados; normas pagas não são reproduzidas
+
+## Dados
+- [trilhas.jsonl](https://projetoindustrial.github.io/industriaedu/texto/dados/trilhas.jsonl)
+- [perfis.jsonl](https://projetoindustrial.github.io/industriaedu/texto/dados/perfis.jsonl)
+- [empresas.csv](https://projetoindustrial.github.io/industriaedu/texto/dados/empresas.csv)
+- [normas.csv](https://projetoindustrial.github.io/industriaedu/texto/dados/normas.csv)
+
+## Portal interativo
+- [IndústriaEDU](https://projetoindustrial.github.io/industriaedu/): versão com filtros e visualizações (requer JavaScript)
+- [Projeto Industrial](https://projetoindustrial.github.io/llms.txt): demais sites da família
+
+## Aviso
+Dados do banco do portal (exportação de 22/07/2026, versão v226). Gerado em 2026-11-10. Links externos e ofertas de cursos mudam: confirme antes de contar com eles.
