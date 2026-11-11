@@ -141,9 +141,11 @@ export default function App(){
     setView(targetView);
   }, []);
 
+  if(loadError) console.error("Falha ao carregar dados da API:", loadError);
   if(loadError) return (
     <div style={{minHeight:"100vh",background:C.bg,color:C.red,display:"flex",alignItems:"center",justifyContent:"center",padding:20,textAlign:"center",fontSize:13}}>
-      Não foi possível carregar os dados da API. Verifique sua conexão e se a URL em <code>apiClient.js</code> está correta.<br/>{String(loadError.message||loadError)}
+      Não foi possível carregar os dados agora. Tente de novo em alguns minutos.<br/>
+      Enquanto isso, a versão em texto está disponível: <a href="./texto/trilhas.html" style={{color:"inherit"}}>trilhas</a>, <a href="./texto/perfis.html" style={{color:"inherit"}}>perfis CNCT</a>, <a href="./texto/empresas.html" style={{color:"inherit"}}>empresas</a> e <a href="./texto/normas.html" style={{color:"inherit"}}>normas</a>.
     </div>
   );
   if(!dataLoaded) return <LoadingScreen/>;

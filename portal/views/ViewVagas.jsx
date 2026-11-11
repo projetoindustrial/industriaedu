@@ -40,7 +40,7 @@ export function ViewVagas(){
         É uma foto de alguns dias: confirme na página da empresa se a vaga continua aberta antes de se candidatar.
         Este portal não cobra nem pede seus dados.
       </p>
-      {erro && <div style={{color:C.red,fontSize:13}}>Não foi possível carregar as vagas. {String(erro.message||erro)}</div>}
+      {erro && <div style={{color:C.red,fontSize:13}}>Não foi possível carregar as vagas agora. Tente de novo em alguns minutos.</div>}
       {!erro && !pronto && <div style={{color:C.muted,fontSize:13}}>Carregando…</div>}
       {pronto && <aba-vagas api-base={API_BASE} style={cores}></aba-vagas>}
     </div>
