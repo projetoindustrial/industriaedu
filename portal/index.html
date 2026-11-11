@@ -43,11 +43,6 @@
     <link rel="stylesheet" href="./vendor/fonts.css">
 
     <!-- Babel (transpilação JSX no browser — MVP, sem Vite/webpack). Auto-hospedado, ver nota acima. -->
-    <!-- Versão travada em 8.0.3 (era sem versão = "latest" móvel, quebraria o SRI abaixo a cada
-         atualização upstream). Se atualizar a versão, recalcular o hash:
-         openssl dgst -sha384 -binary babel.min.js | openssl base64 -A -->
-    <script crossorigin="anonymous" integrity="sha384-fsMuX1qrlL2OwY1g8apML4JcSv2aYFaMXKQIjzX+OOveqSCCdmIMjwNQRoralXGe" src="./vendor/babel.min.js"></script>
-
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
@@ -138,21 +133,6 @@
       ao final deste arquivo.
     -->
 
-    <script>
-      // Shim CommonJS: o plugin transform-modules-commonjs do Babel gera código que espera
-      // `require`, `exports` e `module` como globais do ambiente (Node), que não existem no
-      // browser por padrão. Sem isso, App.jsx quebra com "exports is not defined" antes mesmo
-      // de qualquer componente rodar (achado ao testar de ponta a ponta pela 1ª vez, 04/07/2026
-      // — ver AUTOAUDITORIA_SITE.md / D88).
-      window.exports = {};
-      window.module = { exports: window.exports };
-      window.require = function(mod) {
-        if (mod === "react") return window.React;
-        if (mod === "react-dom") return window.ReactDOM;
-        throw new Error("Módulo não encontrado: " + mod);
-      };
-      window.__babelRequire = window.require;
-    </script>
 
     <!--
       Carregador de múltiplos módulos (D98/D99, 05/07/2026 — quebra do monólito App.jsx).
@@ -163,85 +143,8 @@
       require()/module.exports isolado por arquivo. Substitui o fetch de arquivo único usado
       até 05/07/2026, que não suportava App.jsx importar de vários arquivos.
     -->
-    <script>
-      const __moduleSourceCache = {};   // path -> { code, imports } (transpilado, não executado)
-      const __moduleExportsCache = {};  // path -> exports (já executado)
-      const __moduleLoadPromises = {};  // path -> Promise em andamento (evita buscar o mesmo arquivo 2x)
-      const IMPORT_RE = /import\s+(?:(\w+)\s*,?\s*)?(?:\{([^}]*)\})?\s*from\s*["']([^"']+)["']/g;
-
-      function __resolveModulePath(fromPath, importPath) {
-        if (!importPath.startsWith(".")) return importPath; // bare specifier -- global (react etc.)
-        const base = fromPath.split("/").slice(0, -1);
-        for (const p of importPath.split("/")) {
-          if (p === ".") continue;
-          else if (p === "..") base.pop();
-          else base.push(p);
-        }
-        return base.join("/");
-      }
-
-      // Achado de performance (05/07/2026, D106 — validação final da quebra do monólito):
-      // a versão anterior buscava cada dependência sequencialmente (for + await em loop), o que
-      // com ~23 arquivos levava 9-16s pra carregar — bem mais lento que o único fetch de antes
-      // da quebra do monólito. Corrigido: dependências-irmãs (mesmo nível do grafo) são buscadas
-      // em paralelo via Promise.all, e um cache de promises evita buscar o mesmo arquivo 2x se
-      // duas ramificações do grafo importarem o mesmo módulo ao mesmo tempo.
-      function __loadModule(path) {
-        if (__moduleLoadPromises[path]) return __moduleLoadPromises[path];
-        const promise = (async () => {
-          const res = await fetch(path);
-          if (!res.ok) throw new Error(`Falha ao buscar módulo ${path}: HTTP ${res.status}`);
-          const raw = await res.text();
-          const imports = [];
-          IMPORT_RE.lastIndex = 0;
-          let m;
-          while ((m = IMPORT_RE.exec(raw))) {
-            if (!m[3].startsWith(".")) continue; // "react"/"react-dom" -- resolvido globalmente, não é arquivo
-            imports.push(__resolveModulePath(path, m[3]));
-          }
-          await Promise.all(imports.map(dep => __loadModule(dep)));
-          const { code } = Babel.transform(raw, {
-            presets: [["react", { runtime: "classic" }]],
-            plugins: ["transform-modules-commonjs"],
-            filename: path,
-          });
-          __moduleSourceCache[path] = { code, imports };
-          return __moduleSourceCache[path];
-        })();
-        __moduleLoadPromises[path] = promise;
-        return promise;
-      }
-
-      function __executeModule(path) {
-        if (__moduleExportsCache[path]) return __moduleExportsCache[path];
-        const { code, imports } = __moduleSourceCache[path];
-        for (const dep of imports) __executeModule(dep);
-        const localModule = { exports: {} };
-        const localRequire = (mod) => {
-          if (mod === "react") return window.React;
-          if (mod === "react-dom") return window.ReactDOM;
-          const resolved = __resolveModulePath(path, mod);
-          if (__moduleExportsCache[resolved]) return __moduleExportsCache[resolved];
-          throw new Error(`Módulo ainda não carregado: ${resolved} (importado de ${path})`);
-        };
-        const fn = new Function("module", "exports", "require", code);
-        fn(localModule, localModule.exports, localRequire);
-        __moduleExportsCache[path] = localModule.exports;
-        return localModule.exports;
-      }
-
-      __loadModule("./App.jsx")
-        .then(() => {
-          const appExports = __executeModule("./App.jsx");
-          window.App = appExports.default;
-          mountApp();
-        })
-        .catch(err => {
-          const sub = document.getElementById("splash-sub");
-          if (sub) sub.textContent = "Erro ao carregar App.jsx: " + err.message;
-          console.error(err);
-        });
-    </script>
+    <script src="./app.bundle.js"></script>
+    <!-- app.bundle.js = JSX pré-compilado (esbuild; rode sh build-portal.sh na raiz do repositório depois de editar qualquer .jsx). Substitui o Babel que compilava no navegador a cada visita. -->
 
     <!-- Monta o React assim que o loader de módulos acima terminar de transpilar/executar App.jsx -->
     <script>
