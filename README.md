@@ -45,3 +45,7 @@ node tools/gerar_texto.mjs --json-dir ./dump                      # ou JSONs loc
 ```
 
 Regere e publique sempre que os dados do banco mudarem. Normas pagas aparecem só como referência.
+
+## Licença
+
+O código deste repositório está sob a licença [MIT](LICENSE). Dados, nomes, textos e marcas de terceiros citados ou reunidos aqui continuam sob as licenças e os direitos de cada fonte e não são cobertos por esta licença.
