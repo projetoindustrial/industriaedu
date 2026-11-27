@@ -56,6 +56,8 @@ const dl = (pares) => { const p = pares.filter(([, v]) => v !== "" && v != null)
 function pagina(rel, titulo, descricao, corpo, raiz = "../") {
   const url = SITE + "texto/" + rel;
   paginas.push({ url, titulo });
+  // dados estruturados (schema.org), no mesmo molde dos demais sites do Projeto Industrial
+  const ld = JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", name: titulo, description: descricao, url, inLanguage: "pt-BR", isPartOf: { "@type": "WebSite", name: "IndústriaEDU", url: SITE } }).replace(/</g, "\\u003c");
   gravar("texto/" + rel, `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -64,6 +66,7 @@ function pagina(rel, titulo, descricao, corpo, raiz = "../") {
 <title>${esc(titulo)} — IndústriaEDU (texto)</title>
 <meta name="description" content="${esc(descricao)}">
 <link rel="canonical" href="${url}">
+<script type="application/ld+json">${ld}</script>
 <link rel="icon" type="image/svg+xml" href="${raiz}favicon.svg">
 <link rel="stylesheet" href="${rel.includes("/") ? "../" : ""}estatico.css">
 </head>
