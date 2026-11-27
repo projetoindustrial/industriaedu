@@ -28,10 +28,18 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Upload portal/ as Pages artifact
+      - name: Montar o artefato só com o que o navegador usa
+        # O app carrega index.html, app.bundle.js, vendor/ e favicon (a aba de Vagas aponta para o Painel; D16).
+        # O código-fonte (App.jsx, views/, components/, context/, data/, utils/, theme/, lib/, apiClient.js, db.js)
+        # e os testes ficam no repositório, mas não são publicados no site.
+        run: |
+          mkdir _site
+          cp portal/index.html portal/app.bundle.js portal/favicon.svg portal/og.png portal/llms.txt portal/robots.txt portal/sitemap.xml _site/
+          cp -r portal/texto portal/legal portal/vendor _site/
+      - name: Upload _site/ as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "portal"
+          path: "_site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
