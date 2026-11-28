@@ -9,8 +9,9 @@ Portal gratuito de educação e mercado de trabalho para a indústria brasileira
 
 Um catálogo curado de fontes educacionais gratuitas ligadas à indústria: cursos, trilhas de
 carreira, empresas, normas técnicas (NR), CBO e CNCT, além de dados de mercado de trabalho e
-programas sociais — hoje com 604 fontes, 107 trilhas de carreira e 208 programas sociais
-mapeados.
+programas sociais — hoje com 106 trilhas de carreira, 111 perfis técnicos do CNCT, 970 empresas e
+266 normas e referências (contagem da versão em texto, `portal/texto/dados/`, exportação de
+22/07/2026, banco v226).
 
 ## Arquitetura
 
